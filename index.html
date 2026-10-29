@@ -1,0 +1,629 @@
+<title>SAVANT for Accounting</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="SAVANT for Accounting — licensed Abu Dhabi bookkeeping, VAT and corporate tax consultancy, and feasibility studies for SMEs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one dark ledger-like column, 1120px max, sections separated by hairline rules on a faint drafting grid */
+:root{
+  --ground:#0B0C0A; --panel:#131510; --panel-2:#1A1D15;
+  --ink:#F2F2EE; --ink-2:#C9CBC1; --muted:#9A9C92;
+  --olive:#A9B98A; --olive-deep:#7A8C48; --line:rgba(169,185,138,.22);
+  --f-ar:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
+  --f-en:'IBM Plex Sans','Segoe UI',Helvetica,Arial,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-ar);font-size:16px;line-height:1.7;
+  background-image:linear-gradient(rgba(169,185,138,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(169,185,138,.04) 1px,transparent 1px);
+  background-size:64px 64px,64px 64px}
+html[data-lang="en"] body{font-family:var(--f-en)}
+html[data-lang="ar"] [data-l="en"],html[data-lang="en"] [data-l="ar"]{display:none!important}
+a{color:var(--olive)}a:hover{color:#C7D4AE}
+:focus-visible{outline:2px solid var(--olive);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono);letter-spacing:.04em}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--olive)}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.25}
+p{margin:0}
+
+/* header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ground)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(11,12,10,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand svg{width:30px;height:30px;flex-shrink:0}
+.brand b{font-family:var(--f-mono);font-size:17px;letter-spacing:.14em;font-weight:500}
+nav{display:flex;gap:22px;margin-inline-start:auto;flex-wrap:wrap}
+nav a{color:var(--ink-2);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--ink)}
+.lang{background:none;border:1px solid var(--line);color:var(--ink);font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;border-radius:999px;padding:7px 12px;cursor:pointer;min-height:36px}
+.lang:hover{border-color:var(--olive)}
+@media (max-width:760px){nav{display:none}.lang{margin-inline-start:auto}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;border:1px solid transparent}
+.btn-primary{background:var(--olive);color:#10120C}
+.btn-primary:hover{background:#C2CFA6;color:#10120C}
+.btn-ghost{border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--olive);color:var(--ink)}
+.btn svg{width:18px;height:18px}
+
+/* hero */
+.hero{padding-block:72px 56px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;align-items:center}
+.hero h1{font-size:clamp(34px,5.2vw,56px);font-weight:700;margin-top:14px}
+.hero h1 em{font-style:normal;color:var(--olive)}
+.hero .lead{margin-top:18px;font-size:18px;color:var(--ink-2);max-width:34em}
+.hero .ctas{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.licence{margin-top:22px;font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.06em}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr);padding-block:48px 40px}}
+
+/* compliance calendar card — the subject's own detail */
+.cal{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.cal-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.cal-head strong{font-size:16px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px;border-radius:12px;background:var(--panel-2)}
+.row .t{font-weight:600;font-size:15px}
+.row .s{font-size:13px;color:var(--muted)}
+.chip{font-family:var(--f-mono);font-size:12px;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--olive);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cal small{font-size:12px;color:var(--muted)}
+
+/* sections */
+section{padding-block:72px;border-top:1px solid var(--line)}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;max-width:640px}
+.sec-head h2{font-size:clamp(26px,3.4vw,36px)}
+.sec-head p{color:var(--ink-2)}
+
+.svc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.svc article{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.svc .code{font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.08em}
+.svc h3{font-size:20px}
+.svc ul{margin:0;padding-inline-start:18px;color:var(--ink-2);font-size:15px;display:flex;flex-direction:column;gap:6px}
+.soon{margin-top:18px;border:1px dashed rgba(169,185,138,.45);border-radius:14px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(122,140,72,.07)}
+.soon .chip{color:var(--olive)}
+@media (max-width:900px){.svc{grid-template-columns:minmax(0,1fr)}}
+
+.pkgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.pkg{border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.pkg.feature{border-color:var(--olive);background:var(--panel)}
+.pkg .tier{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pkg h3{font-size:22px}
+.pkg .inc{font-size:13px;color:var(--muted)}
+.pkg ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;font-size:15px;color:var(--ink-2)}
+.pkg li{display:flex;gap:10px}
+.pkg li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--olive);margin-top:10px;flex-shrink:0}
+.pkg .price{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+@media (max-width:900px){.pkgs{grid-template-columns:minmax(0,1fr)}}
+
+.who{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.who div{border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.who b{display:block;font-size:16px;margin-bottom:4px}
+.who span{font-size:14px;color:var(--muted)}
+@media (max-width:900px){.who{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.who{grid-template-columns:minmax(0,1fr)}}
+
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;counter-reset:s}
+.steps li{list-style:none;border-top:2px solid var(--olive);padding-top:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.steps .n{font-family:var(--f-mono);font-size:13px;color:var(--olive)}
+.steps b{font-size:17px}
+.steps span{font-size:14px;color:var(--ink-2)}
+ol.steps{margin:0;padding:0}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.steps{grid-template-columns:minmax(0,1fr)}}
+
+.faq{display:flex;flex-direction:column;gap:10px;max-width:820px}
+details{border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+summary{cursor:pointer;padding:18px 20px;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:16px;min-height:44px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-mono);color:var(--olive);font-size:18px}
+details[open] summary::after{content:"−"}
+details p{padding:0 20px 18px;color:var(--ink-2);font-size:15px}
+.note{margin-top:14px;font-size:13px;color:var(--muted);max-width:820px}
+
+.contact{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start}
+.contact h2{font-size:clamp(28px,3.8vw,40px)}
+.cards{display:grid;gap:12px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--panel)}
+.card .k{font-size:13px;color:var(--muted)}
+.card .v{font-family:var(--f-mono);font-size:15px;user-select:all;direction:ltr;overflow-wrap:anywhere}
+.copy{background:none;border:1px solid var(--line);color:var(--ink-2);border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--f-mono);min-height:34px}
+.copy:hover{border-color:var(--olive);color:var(--ink)}
+@media (max-width:860px){.contact{grid-template-columns:minmax(0,1fr)}}
+
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* insights */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.f{background:none;border:1px solid var(--line);color:var(--ink-2);border-radius:999px;padding:8px 14px;font-size:13px;cursor:pointer;min-height:38px;font-family:inherit}
+.f:hover{border-color:var(--olive);color:var(--ink)}.f.on{background:var(--olive);color:#10120C;border-color:var(--olive)}
+.posts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.post{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.post .meta{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.post h3{font-size:18px;font-family:var(--f-en);text-align:left}
+.post .ar{font-family:var(--f-ar);color:var(--ink-2);font-size:14px}
+.post details{border:none;background:none;margin-top:auto}
+.post summary{padding:8px 0 0;font-size:14px;color:var(--olive);min-height:36px}
+.post .body{font-family:var(--f-en);font-size:14px;color:var(--ink-2);display:flex;flex-direction:column;gap:10px;padding-top:6px;text-align:left}
+.post .body p{padding:0}.post .disc{font-size:12px;color:var(--muted)}
+.empty{color:var(--muted)}
+@media (max-width:900px){.posts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.posts{grid-template-columns:minmax(0,1fr)}}
+</style>
+
+<style>
+.svc{grid-template-columns:repeat(3,minmax(0,1fr))}
+.svc .num{font-family:var(--f-mono);font-size:12px;color:var(--olive);letter-spacing:.1em}
+.creds{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.creds .chip{font-size:12px}
+.note-box{margin-top:22px;border:1px solid var(--line);border-radius:14px;padding:16px 20px;font-size:13px;color:var(--muted);background:var(--panel)}
+@media (max-width:900px){.svc{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:901px) and (max-width:1100px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="SAVANT">
+      <svg viewBox="228 124 477.06 477.06" aria-hidden="true"><path fill="#F2F2EE" fill-rule="evenodd" d="M369.41 601.06H228l.47-477.06h181.44c6.14 102.39-21.29 193.22-61.36 284.21-3.4 10.35 11.76 16.94 16.61 7.03C435.32 272.06 560.05 191.46 705.06 124v259.39C583.4 433.14 364.07 423.16 369.41 601.06Z"/></svg>
+      <b>SAVANT</b>
+    </a>
+    <nav aria-label="Main">
+      <a href="#services"><span data-l="ar">الخدمات</span><span data-l="en">Services</span></a>
+      <a href="#packages"><span data-l="ar">الباقات</span><span data-l="en">Packages</span></a>
+      <a href="#start"><span data-l="ar">آلية العمل</span><span data-l="en">How we work</span></a>
+      <a href="#insights"><span data-l="ar">مقالات</span><span data-l="en">Insights</span></a>
+      <a href="#faq"><span data-l="ar">الأسئلة الشائعة</span><span data-l="en">FAQ</span></a>
+      <a href="#contact"><span data-l="ar">تواصل معنا</span><span data-l="en">Contact</span></a>
+    </nav>
+    <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow"><span data-l="ar">المحاسبة والضرائب والاستشارات المالية · أبوظبي</span><span data-l="en">Accounting, tax and financial advisory · Abu Dhabi</span></div>
+      <h1>
+        <span data-l="ar">شريككم المالي في دولة الإمارات، <em>بمعايير دولية.</em></span>
+        <span data-l="en">Your financial partner in the UAE, <em>to international standards.</em></span>
+      </h1>
+      <p class="lead">
+        <span data-l="ar">نقدّم خدمات المحاسبة وإعداد التقارير المالية وفق المعايير الدولية لإعداد التقارير المالية (IFRS)، والاستشارات الضريبية في ضريبة القيمة المضافة وضريبة الشركات، ودراسات الجدوى والاستشارات المالية، للشركات المحلية والإقليمية والدولية العاملة في دولة الإمارات العربية المتحدة.</span>
+        <span data-l="en">We provide accounting and IFRS financial reporting, UAE VAT and corporate tax advisory, feasibility studies and financial advisory to local, regional and international businesses operating in the United Arab Emirates.</span>
+      </p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="https://wa.me/971562667020" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20l1.3-5.1A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+          <span data-l="ar">احجز استشارة أولى مجانية</span><span data-l="en">Book a complimentary consultation</span>
+        </a>
+        <a class="btn btn-ghost" href="#services"><span data-l="ar">استعرض خدماتنا</span><span data-l="en">Explore our services</span></a>
+      </div>
+      <div class="creds" aria-label="Team credentials">
+        <span class="chip">CPA</span><span class="chip">CMA</span><span class="chip">ACCA</span><span class="chip">CIA</span><span class="chip">IFRS</span>
+      </div>
+      <div class="licence">Abu Dhabi Economic Licence CN-5704766</div>
+    </div>
+
+    <aside class="cal" aria-label="UAE filing deadlines">
+      <div class="cal-head">
+        <strong><span data-l="ar">مواعيد ضريبية رئيسية</span><span data-l="en">Key tax deadlines</span></strong>
+        <span class="eyebrow">UAE · FTA</span>
+      </div>
+      <div class="row">
+        <div><div class="t"><span data-l="ar">إقرار ضريبة القيمة المضافة وسدادها</span><span data-l="en">VAT return and payment</span></div><div class="s"><span data-l="ar">خلال 28 يوماً من نهاية الفترة الضريبية</span><span data-l="en">within 28 days of the end of each tax period</span></div></div>
+        <span class="chip"><span data-l="ar">28 يوماً</span><span data-l="en">28 days</span></span>
+      </div>
+      <div class="row">
+        <div><div class="t"><span data-l="ar">إقرار ضريبة الشركات وسدادها</span><span data-l="en">Corporate tax return and payment</span></div><div class="s"><span data-l="ar">خلال 9 أشهر من نهاية الفترة الضريبية</span><span data-l="en">within 9 months of the end of the tax period</span></div></div>
+        <span class="chip"><span data-l="ar">9 أشهر</span><span data-l="en">9 months</span></span>
+      </div>
+      <div class="row">
+        <div><div class="t"><span data-l="ar">حد التسجيل الإلزامي في ضريبة القيمة المضافة</span><span data-l="en">Mandatory VAT registration threshold</span></div><div class="s"><span data-l="ar">قيمة التوريدات الخاضعة للضريبة خلال 12 شهراً</span><span data-l="en">taxable supplies over the previous 12 months</span></div></div>
+        <span class="chip">AED 375,000</span>
+      </div>
+      <small><span data-l="ar">نتابع مواعيد الامتثال نيابةً عنكم ونذكّركم بها مسبقاً لتجنّب الغرامات الإدارية.</span><span data-l="en">We monitor your compliance calendar and notify you in advance to help you avoid administrative penalties.</span></small>
+    </aside>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span data-l="ar">الخدمات</span><span data-l="en">Services</span></div>
+        <h2><span data-l="ar">منظومة متكاملة من الخدمات المحاسبية والضريبية والاستشارية</span><span data-l="en">An integrated suite of accounting, tax and advisory services</span></h2>
+        <p><span data-l="ar">يقدّم خدماتنا فريق من المهنيين الحاصلين على شهادات CPA وCMA وACCA وCIA وIFRS.</span><span data-l="en">Our services are delivered by a team of professionals holding CPA, CMA, ACCA, CIA and IFRS certifications.</span></p>
+      </div>
+      <div class="svc">
+        <article>
+          <span class="num">01</span>
+          <h3><span data-l="ar">المحاسبة وإعداد التقارير المالية</span><span data-l="en">Accounting &amp; financial reporting</span></h3>
+          <ul>
+            <li><span data-l="ar">تنظيم ومسك السجلات والدفاتر المحاسبية</span><span data-l="en">Maintenance of accounting records and books</span></li>
+            <li><span data-l="ar">إعداد القوائم المالية وفق المعايير الدولية (IFRS)</span><span data-l="en">Preparation of IFRS financial statements</span></li>
+            <li><span data-l="ar">التسويات البنكية وتسويات الذمم المدينة والدائنة</span><span data-l="en">Bank, receivables and payables reconciliations</span></li>
+            <li><span data-l="ar">التقارير الإدارية الشهرية والربع سنوية</span><span data-l="en">Monthly and quarterly management reporting</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">02</span>
+          <h3><span data-l="ar">الاستشارات الضريبية</span><span data-l="en">Tax advisory</span></h3>
+          <ul>
+            <li><span data-l="ar">ضريبة القيمة المضافة وضريبة الشركات والضريبة الانتقائية</span><span data-l="en">VAT, corporate tax and excise tax</span></li>
+            <li><span data-l="ar">طلبات التسجيل وإلغاء التسجيل والاسترداد</span><span data-l="en">Registration, deregistration and refund applications</span></li>
+            <li><span data-l="ar">إعداد الإقرارات الضريبية ومراجعة الامتثال</span><span data-l="en">Preparation of tax returns and compliance reviews</span></li>
+            <li><span data-l="ar">الاستعداد للتدقيق الضريبي والفوترة الإلكترونية</span><span data-l="en">Tax audit readiness and e-invoicing readiness</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">03</span>
+          <h3><span data-l="ar">دراسات الجدوى الاقتصادية</span><span data-l="en">Economic feasibility studies</span></h3>
+          <ul>
+            <li><span data-l="ar">دراسات الجدوى للمشاريع الجديدة والتوسعات</span><span data-l="en">Feasibility studies for new projects and expansions</span></li>
+            <li><span data-l="ar">النماذج المالية وتوقعات التدفقات النقدية</span><span data-l="en">Financial models and cash-flow projections</span></li>
+            <li><span data-l="ar">تحليل نقطة التعادل والحساسية</span><span data-l="en">Break-even and sensitivity analysis</span></li>
+            <li><span data-l="ar">دراسات مُعدّة لتقديمها إلى البنوك والمستثمرين</span><span data-l="en">Studies prepared for banks and investors</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">04</span>
+          <h3><span data-l="ar">الإدارة المالية الاستراتيجية</span><span data-l="en">Strategic financial management</span></h3>
+          <ul>
+            <li><span data-l="ar">التخطيط المالي وإعداد الموازنات</span><span data-l="en">Financial planning and budgeting</span></li>
+            <li><span data-l="ar">تحليل الأداء المالي ودعم اتخاذ القرار</span><span data-l="en">Financial performance analysis and decision support</span></li>
+            <li><span data-l="ar">تقييم الفرص الاستثمارية وتعزيز الربحية</span><span data-l="en">Investment appraisal and profitability improvement</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">05</span>
+          <h3><span data-l="ar">تحليل التكاليف وإدارتها</span><span data-l="en">Cost analysis &amp; management</span></h3>
+          <ul>
+            <li><span data-l="ar">تحليل معمّق لهياكل التكاليف ومصادر الهدر</span><span data-l="en">In-depth analysis of cost structures and inefficiencies</span></li>
+            <li><span data-l="ar">تصميم أنظمة محاسبة التكاليف وتطبيقها</span><span data-l="en">Design and implementation of cost accounting systems</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">06</span>
+          <h3><span data-l="ar">التسعير وتحديد التكلفة</span><span data-l="en">Pricing &amp; costing</span></h3>
+          <ul>
+            <li><span data-l="ar">استراتيجيات تسعير مبنية على دراسات السوق والتحليل المالي</span><span data-l="en">Pricing strategies based on market research and financial analysis</span></li>
+            <li><span data-l="ar">مراجعة دورية للأسعار لضمان التنافسية والربحية</span><span data-l="en">Periodic pricing reviews for competitiveness and profitability</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">07</span>
+          <h3><span data-l="ar">التدقيق الداخلي والرقابة الداخلية</span><span data-l="en">Internal audit &amp; internal controls</span></h3>
+          <ul>
+            <li><span data-l="ar">تقييم أنظمة الرقابة الداخلية وتعزيز الحوكمة</span><span data-l="en">Internal control assessments and governance enhancement</span></li>
+            <li><span data-l="ar">مهام التدقيق الداخلي ومتابعة الالتزام بالسياسات واللوائح</span><span data-l="en">Internal audit engagements and policy compliance reviews</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">08</span>
+          <h3><span data-l="ar">الاستدامة والحوكمة البيئية والاجتماعية (ESG)</span><span data-l="en">Sustainability &amp; ESG advisory</span></h3>
+          <ul>
+            <li><span data-l="ar">حلول تدعم توجّهات دولة الإمارات في الاستدامة</span><span data-l="en">Solutions aligned with the UAE's sustainability agenda</span></li>
+            <li><span data-l="ar">إعداد أطر ومؤشرات الاستدامة والمسؤولية المجتمعية</span><span data-l="en">Sustainability and CSR frameworks and indicators</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">09</span>
+          <h3><span data-l="ar">التحول الرقمي المالي وأنظمة ERP</span><span data-l="en">Digital finance &amp; ERP systems</span></h3>
+          <ul>
+            <li><span data-l="ar">تطبيق أنظمة تخطيط الموارد ودمجها (SAP وMicrosoft Dynamics وZoho Books)</span><span data-l="en">ERP implementation and integration (SAP, Microsoft Dynamics, Zoho Books)</span></li>
+            <li><span data-l="ar">رقمنة العمليات المالية ورفع كفاءتها</span><span data-l="en">Digitalisation of finance operations</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">10</span>
+          <h3><span data-l="ar">إدارة المخاطر والاستشارات المالية المتخصصة</span><span data-l="en">Risk &amp; specialist financial advisory</span></h3>
+          <ul>
+            <li><span data-l="ar">استشارات إدارة المخاطر المالية والاستراتيجية</span><span data-l="en">Financial and strategic risk management</span></li>
+            <li><span data-l="ar">الاستشارات المالية لعمليات الاندماج والاستحواذ</span><span data-l="en">Financial advisory for mergers and acquisitions</span></li>
+            <li><span data-l="ar">التخطيط المالي للتوسع الدولي</span><span data-l="en">Financial planning for international expansion</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">11</span>
+          <h3><span data-l="ar">التدريب المالي والتطوير المهني</span><span data-l="en">Financial training &amp; professional development</span></h3>
+          <ul>
+            <li><span data-l="ar">برامج تدريبية متخصصة (CPA وCMA وIFRS وCIA)</span><span data-l="en">Specialist programmes (CPA, CMA, IFRS, CIA)</span></li>
+            <li><span data-l="ar">دورات متقدمة في المحاسبة وإدارة التكاليف والضرائب</span><span data-l="en">Advanced courses in accounting, cost management and tax</span></li>
+          </ul>
+        </article>
+        <article>
+          <span class="num">12</span>
+          <h3><span data-l="ar">التمثيل أمام الهيئة الاتحادية للضرائب</span><span data-l="en">Representation before the FTA</span></h3>
+          <ul>
+            <li><span data-l="ar">تتوفّر هذه الخدمة فور اعتمادنا وكيلاً ضريبياً مسجّلاً لدى الهيئة الاتحادية للضرائب.</span><span data-l="en">Available once we are registered as a tax agent with the Federal Tax Authority.</span></li>
+          </ul>
+          <span class="chip" style="align-self:flex-start"><span data-l="ar">قريباً</span><span data-l="en">COMING SOON</span></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="packages">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span data-l="ar">الباقات</span><span data-l="en">Packages</span></div>
+        <h2><span data-l="ar">باقات شهرية تتناسب مع حجم نشاطكم</span><span data-l="en">Monthly packages scaled to your business</span></h2>
+        <p><span data-l="ar">تُحدَّد الأتعاب وفق حجم المعاملات الشهرية ونطاق العمل، ونرسل إليكم عرض سعر مكتوباً خلال يوم عمل واحد.</span><span data-l="en">Fees are set according to your monthly transaction volume and scope of work. You will receive a written quotation within one working day.</span></p>
+      </div>
+      <div class="pkgs">
+        <div class="pkg">
+          <div class="tier"><h3><span data-l="ar">الأساسية</span><span data-l="en">Essential</span></h3></div>
+          <ul>
+            <li><span data-l="ar">مسك الدفاتر الشهري</span><span data-l="en">Monthly bookkeeping</span></li>
+            <li><span data-l="ar">التسويات البنكية</span><span data-l="en">Bank reconciliations</span></li>
+            <li><span data-l="ar">إعداد إقرارات ضريبة القيمة المضافة</span><span data-l="en">VAT return preparation</span></li>
+            <li><span data-l="ar">تقرير مالي شهري موجز</span><span data-l="en">Concise monthly financial report</span></li>
+          </ul>
+          <div class="price"><span data-l="ar">عرض سعر مخصّص</span><span data-l="en">Tailored quotation</span></div>
+        </div>
+        <div class="pkg feature">
+          <div class="tier"><h3><span data-l="ar">المهنية</span><span data-l="en">Professional</span></h3><span class="chip"><span data-l="ar">الأكثر طلباً</span><span data-l="en">Most popular</span></span></div>
+          <div class="inc"><span data-l="ar">جميع خدمات الباقة الأساسية، بالإضافة إلى:</span><span data-l="en">Everything in Essential, plus:</span></div>
+          <ul>
+            <li><span data-l="ar">إعداد إقرار ضريبة الشركات</span><span data-l="en">Corporate tax return preparation</span></li>
+            <li><span data-l="ar">قوائم مالية سنوية وفق IFRS</span><span data-l="en">Annual IFRS financial statements</span></li>
+            <li><span data-l="ar">تقارير إدارية ربع سنوية</span><span data-l="en">Quarterly management reports</span></li>
+            <li><span data-l="ar">متابعة مواعيد الامتثال الضريبي</span><span data-l="en">Tax compliance calendar monitoring</span></li>
+          </ul>
+          <div class="price"><span data-l="ar">عرض سعر مخصّص</span><span data-l="en">Tailored quotation</span></div>
+        </div>
+        <div class="pkg">
+          <div class="tier"><h3><span data-l="ar">المؤسسية</span><span data-l="en">Enterprise</span></h3></div>
+          <div class="inc"><span data-l="ar">جميع خدمات الباقة المهنية، بالإضافة إلى:</span><span data-l="en">Everything in Professional, plus:</span></div>
+          <ul>
+            <li><span data-l="ar">الموازنات وتوقعات التدفقات النقدية</span><span data-l="en">Budgets and cash-flow projections</span></li>
+            <li><span data-l="ar">تحليل التكاليف والتسعير</span><span data-l="en">Cost and pricing analysis</span></li>
+            <li><span data-l="ar">مراجعة سنوية للوضع الضريبي</span><span data-l="en">Annual tax position review</span></li>
+            <li><span data-l="ar">تقييم الرقابة الداخلية</span><span data-l="en">Internal control assessment</span></li>
+          </ul>
+          <div class="price"><span data-l="ar">عرض سعر مخصّص</span><span data-l="en">Tailored quotation</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="who">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span data-l="ar">عملاؤنا</span><span data-l="en">Who we serve</span></div>
+        <h2><span data-l="ar">شركات من مختلف القطاعات والجنسيات</span><span data-l="en">Businesses across sectors and nationalities</span></h2>
+      </div>
+      <div class="who">
+        <div><b><span data-l="ar">الشركات الدولية</span><span data-l="en">International groups</span></b><span><span data-l="ar">الفروع والشركات التابعة في دولة الإمارات</span><span data-l="en">UAE branches and subsidiaries</span></span></div>
+        <div><b><span data-l="ar">الشركات الصغيرة والمتوسطة</span><span data-l="en">SMEs</span></b><span><span data-l="ar">المحاسبة الشهرية والامتثال الضريبي</span><span data-l="en">Monthly accounting and tax compliance</span></span></div>
+        <div><b><span data-l="ar">شركات المناطق الحرة</span><span data-l="en">Free zone companies</span></b><span><span data-l="ar">ضريبة الشركات والقوائم المالية وفق IFRS</span><span data-l="en">Corporate tax and IFRS financial statements</span></span></div>
+        <div><b><span data-l="ar">رواد الأعمال والمستثمرون</span><span data-l="en">Entrepreneurs &amp; investors</span></b><span><span data-l="ar">دراسات الجدوى وتأسيس الأنظمة المالية</span><span data-l="en">Feasibility studies and finance set-up</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span data-l="ar">آلية العمل</span><span data-l="en">How we work</span></div>
+        <h2><span data-l="ar">من الاستشارة الأولى إلى التقرير الشهري الأول</span><span data-l="en">From first consultation to first monthly report</span></h2>
+      </div>
+      <ol class="steps">
+        <li><span class="n">01</span><b><span data-l="ar">استشارة أولى مجانية</span><span data-l="en">Complimentary consultation</span></b><span><span data-l="ar">نتعرّف على نشاطكم ومتطلباتكم.</span><span data-l="en">We understand your business and requirements.</span></span></li>
+        <li><span class="n">02</span><b><span data-l="ar">عرض السعر وخطاب التكليف</span><span data-l="en">Quotation and engagement letter</span></b><span><span data-l="ar">نطاق العمل والأتعاب محدّدان كتابياً.</span><span data-l="en">Scope and fees agreed in writing.</span></span></li>
+        <li><span class="n">03</span><b><span data-l="ar">استلام المستندات</span><span data-l="en">Document onboarding</span></b><span><span data-l="ar">نراجع سجلاتكم ونعتمد خطة العمل.</span><span data-l="en">We review your records and agree the work plan.</span></span></li>
+        <li><span class="n">04</span><b><span data-l="ar">التقارير والمتابعة الدورية</span><span data-l="en">Reporting and ongoing support</span></b><span><span data-l="ar">تقارير منتظمة وتذكير بالمواعيد النظامية.</span><span data-l="en">Regular reports and statutory deadline reminders.</span></span></li>
+      </ol>
+    </div>
+  </section>
+
+
+  <section id="insights">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span data-l="ar">مقالات</span><span data-l="en">Insights</span></div>
+        <h2><span data-l="ar">نصائح محاسبية وضريبية لأصحاب الأعمال</span><span data-l="en">Accounting and tax notes for business owners</span></h2>
+        <p><span data-l="ar">نفس المحتوى اللي بننشره على السوشيال ميديا، محفوظ هنا كمرجع. يظهر كل مقال في يوم نشره.</span><span data-l="en">The same notes we share on social media, kept here for reference. Each one appears on its publishing day.</span></p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter">
+        <button type="button" class="f on" data-f="all"><span data-l="ar">الكل</span><span data-l="en">All</span></button>
+        <button type="button" class="f" data-f="VAT">VAT</button>
+        <button type="button" class="f" data-f="TAX"><span data-l="ar">ضريبة الشركات</span><span data-l="en">Corporate tax</span></button>
+        <button type="button" class="f" data-f="BOOKS"><span data-l="ar">مسك الدفاتر</span><span data-l="en">Bookkeeping</span></button>
+        <button type="button" class="f" data-f="FEAS"><span data-l="ar">دراسات الجدوى</span><span data-l="en">Feasibility</span></button>
+      </div>
+      <div class="posts" id="posts">
+<article class="post" data-date="2026-11-02" data-tag="ABOUT US">
+ <div class="meta"><span class="chip">ABOUT US</span><time dir="ltr" datetime="2026-11-02">2 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Meet SAVANT for Accounting</h3><div class="ar" dir="rtl" lang="ar">سفينت للمحاسبة · أبوظبي</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Meet SAVANT for Accounting 👋</p><p>An Abu Dhabi accounting, tax and financial advisory firm serving local, regional and international businesses in the UAE.</p><p>Our services:<br>• Accounting and IFRS financial reporting<br>• UAE VAT, corporate tax and excise tax advisory<br>• Economic feasibility studies<br>• Strategic financial management, cost analysis and pricing<br>• Internal audit and internal controls<br>• ESG, ERP implementation, risk and M&amp;A financial advisory<br>• Financial training (CPA, CMA, IFRS, CIA)</p><p>Our team holds CPA, CMA, ACCA, CIA and IFRS certifications. We serve clients in Arabic and English.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-03" data-tag="UAE VAT">
+ <div class="meta"><span class="chip">UAE VAT</span><time dir="ltr" datetime="2026-11-03">3 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Do you need to register for VAT?</h3><div class="ar" dir="rtl" lang="ar">هل يلزمك التسجيل في ضريبة القيمة المضافة؟</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Do you actually need to register for VAT in the UAE?</p><p>📌 Mandatory: your taxable supplies exceeded AED 375,000 in the last 12 months, or will in the next 30 days.<br>📌 Voluntary: your taxable supplies or expenses exceeded AED 187,500.</p><p>Missing the mandatory threshold can lead to penalties, so check your rolling 12-month total every month, not just at year end.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-04" data-tag="CORPORATE TAX">
+ <div class="meta"><span class="chip">CORPORATE TAX</span><time dir="ltr" datetime="2026-11-04">4 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Small Business Relief extended to 2029</h3><div class="ar" dir="rtl" lang="ar">تمديد إعفاء الأعمال الصغيرة حتى 2029</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Small Business Relief has been extended to 2029 (Ministerial Decision No. 131 of 2026).</p><p>• Revenue limit: AED 3 million per tax period (and in previous periods)<br>• Applies to tax periods ending on or before 31 December 2029<br>• Not automatic: you elect it in your corporate tax return<br>• You still need to register, keep records and file<br>• Not available to Qualifying Free Zone Persons or members of large multinational groups</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-05" data-tag="CORPORATE TAX">
+ <div class="meta"><span class="chip">CORPORATE TAX</span><time dir="ltr" datetime="2026-11-05">5 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">UAE corporate tax in one minute</h3><div class="ar" dir="rtl" lang="ar">ضريبة الشركات في الإمارات في دقيقة</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>UAE corporate tax in one minute:</p><p>• 0% on taxable income up to AED 375,000<br>• 9% on taxable income above AED 375,000<br>• The return is due within 9 months of your financial year end<br>• Companies must register even if no tax is due. Individuals running a business register once business turnover exceeds AED 1 million in a calendar year</p><p>Businesses that face difficulties at filing time are typically those without accurate, up-to-date monthly accounts.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-06" data-tag="MYTH VS FACT">
+ <div class="meta"><span class="chip">MYTH VS FACT</span><time dir="ltr" datetime="2026-11-06">6 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Do freelancers pay corporate tax?</h3><div class="ar" dir="rtl" lang="ar">هل يدفع أصحاب الأعمال الحرة ضريبة الشركات؟</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Myth: freelancers and sole establishments never deal with corporate tax.</p><p>Fact: an individual running a business comes into scope once business turnover exceeds AED 1 million in a calendar year. From then on, they register with the FTA and file a return.</p><p>Below AED 1 million, that business income is outside corporate tax.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-09" data-tag="E-INVOICING">
+ <div class="meta"><span class="chip">E-INVOICING</span><time dir="ltr" datetime="2026-11-09">9 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">E-invoicing is coming to the UAE</h3><div class="ar" dir="rtl" lang="ar">الفوترة الإلكترونية قادمة في الإمارات</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>E-invoicing is coming to the UAE (Ministry of Finance phased rollout):</p><p>• Revenue AED 50M or more: mandatory from 1 January 2027<br>• Revenue below AED 50M: mandatory from 1 July 2027, with an accredited service provider appointed by 31 March 2027<br>• Government entities: from 1 October 2027</p><p>Invoices will be exchanged in a structured electronic format. Accurate, up-to-date accounting records will make the transition considerably easier.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-10" data-tag="BOOKKEEPING">
+ <div class="meta"><span class="chip">BOOKKEEPING</span><time dir="ltr" datetime="2026-11-10">10 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">5 bookkeeping mistakes small businesses make</h3><div class="ar" dir="rtl" lang="ar">5 أخطاء محاسبية شائعة في الشركات الصغيرة</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>5 bookkeeping mistakes we see in small UAE businesses:</p><p>1. Mixing personal and business spending on one card<br>2. Recording sales only when cash arrives<br>3. Skipping monthly bank reconciliations<br>4. Losing supplier invoices, and the VAT you could have recovered with them<br>5. Leaving everything to the last week before a tax deadline</p><p>Each is far less costly to correct now than at year end.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-11" data-tag="UAE VAT">
+ <div class="meta"><span class="chip">UAE VAT</span><time dir="ltr" datetime="2026-11-11">11 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">What a valid tax invoice must show</h3><div class="ar" dir="rtl" lang="ar">ماذا يجب أن تتضمن الفاتورة الضريبية</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>What a full UAE tax invoice must show:</p><p>✔ The words “Tax Invoice”<br>✔ Your name, address and TRN<br>✔ Your customer&#x27;s name, address and TRN (if registered)<br>✔ A sequential invoice number and the date<br>✔ Description, quantity and unit price<br>✔ VAT rate, VAT amount and total, with VAT shown in AED</p><p>Missing details can cost your customer their input VAT recovery.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-12" data-tag="COMPLIANCE">
+ <div class="meta"><span class="chip">COMPLIANCE</span><time dir="ltr" datetime="2026-11-12">12 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">How long should you keep your records?</h3><div class="ar" dir="rtl" lang="ar">ما المدة النظامية للاحتفاظ بالسجلات؟</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>How long should a UAE business keep its records?</p><p>📁 VAT records: at least 5 years (15 years for real estate)<br>📁 Corporate tax records: at least 7 years after the tax period ends</p><p>That means invoices, contracts, bank statements and the workings behind your returns. A cloud accounting system makes retention and retrieval considerably easier.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-13" data-tag="UAE VAT">
+ <div class="meta"><span class="chip">UAE VAT</span><time dir="ltr" datetime="2026-11-13">13 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Zero-rated is not the same as exempt</h3><div class="ar" dir="rtl" lang="ar">الخاضع لنسبة الصفر يختلف عن المعفى</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Zero-rated and exempt both mean no VAT on the sale, but they are not the same:</p><p>0% Zero-rated: you can still recover the VAT you pay on related costs. Examples: exports, international transport.</p><p>Exempt: you cannot recover the VAT on related costs. Examples: residential rent (after the first supply), bare land, local passenger transport.</p><p>Misclassification directly affects the amount of input VAT you can recover.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-16" data-tag="BOOKKEEPING">
+ <div class="meta"><span class="chip">BOOKKEEPING</span><time dir="ltr" datetime="2026-11-16">16 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">The 5 building blocks of your books</h3><div class="ar" dir="rtl" lang="ar">الأقسام الخمسة لدفاترك المحاسبية</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Every set of books is built on 5 groups of accounts:</p><p>1. Assets: what the business owns<br>2. Liabilities: what it owes<br>3. Equity: the owner&#x27;s stake<br>4. Income: what you earn<br>5. Expenses: what you spend to earn it</p><p>A clear chart of accounts is the first thing we set up for every client.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-17" data-tag="MONTH END">
+ <div class="meta"><span class="chip">MONTH END</span><time dir="ltr" datetime="2026-11-17">17 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">A 30-minute month-end checklist</h3><div class="ar" dir="rtl" lang="ar">قائمة إقفال الشهر في 30 دقيقة</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>A month-end checklist for small businesses, 30 minutes if you do it every month:</p><p>☐ Reconcile every bank account and card<br>☐ Record all sales invoices and supplier bills<br>☐ Chase receivables older than 30 days<br>☐ Review the VAT on purchases you can recover<br>☐ Compare this month&#x27;s profit with last month&#x27;s and ask why it changed</p></div></details>
+</article>
+<article class="post" data-date="2026-11-18" data-tag="FEASIBILITY">
+ <div class="meta"><span class="chip">FEASIBILITY</span><time dir="ltr" datetime="2026-11-18">18 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Inside a feasibility study</h3><div class="ar" dir="rtl" lang="ar">ماذا تحتوي دراسة الجدوى</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>What goes into a feasibility study:</p><p>1. Market: demand, customers and competitors<br>2. Operations: location, staff and equipment<br>3. Costs: start-up and running costs<br>4. Revenue: a realistic sales forecast<br>5. Finance: funding, cash flow and break-even<br>6. Risks: what happens if sales come in 20% lower</p><p>Planning a new project or a bank application? Start here.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-19" data-tag="FEASIBILITY">
+ <div class="meta"><span class="chip">FEASIBILITY</span><time dir="ltr" datetime="2026-11-19">19 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">What banks look for in a feasibility study</h3><div class="ar" dir="rtl" lang="ar">ما الذي تبحث عنه البنوك في دراسة الجدوى؟</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Applying for financing for a new project? Banks reading a feasibility study usually look for:</p><p>• Realistic sales assumptions, backed by market evidence<br>• A clear cost breakdown, including the costs owners forget<br>• Monthly cash-flow forecasts for at least the first year<br>• Break-even point and how long it takes to reach it<br>• What happens if sales come in 20% lower</p><p>A study that answers these questions upfront saves weeks of back-and-forth.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-20" data-tag="MYTH VS FACT">
+ <div class="meta"><span class="chip">MYTH VS FACT</span><time dir="ltr" datetime="2026-11-20">20 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">No tax to pay means no return?</h3><div class="ar" dir="rtl" lang="ar">لا توجد ضريبة مستحقة = لا يوجد إقرار؟</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Myth: if my profit is under AED 375,000, I don&#x27;t need to file anything.</p><p>Fact: every business registered for corporate tax must file a return for each tax period, even when the tax due is zero. The return is due within 9 months of the end of the period.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-23" data-tag="UAE VAT">
+ <div class="meta"><span class="chip">UAE VAT</span><time dir="ltr" datetime="2026-11-23">23 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Before you file your VAT return</h3><div class="ar" dir="rtl" lang="ar">قبل تقديم إقرار ضريبة القيمة المضافة</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Gather these before you file your VAT return:</p><p>☐ All sales invoices for the period<br>☐ All purchase invoices and receipts<br>☐ Credit and debit notes<br>☐ Import and customs records<br>☐ Bank statements to cross-check totals<br>☐ Last period&#x27;s return</p><p>The return and payment are due within 28 days after the period ends.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-24" data-tag="REMINDER">
+ <div class="meta"><span class="chip">REMINDER</span><time dir="ltr" datetime="2026-11-24">24 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">VAT return due in 28 days</h3><div class="ar" dir="rtl" lang="ar">إقرار ضريبة القيمة المضافة خلال 28 يوماً</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Reminder for UAE VAT-registered businesses:</p><p>Your VAT return and payment are due within 28 days after the end of each tax period. If your quarter ended on 31 October, the deadline is 28 November.</p><p>If your records for the period aren&#x27;t complete yet, this is the week to finish them.</p><p class="disc">General information only, not advice for your specific business.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-25" data-tag="BOOKKEEPING">
+ <div class="meta"><span class="chip">BOOKKEEPING</span><time dir="ltr" datetime="2026-11-25">25 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Why your business needs its own bank account</h3><div class="ar" dir="rtl" lang="ar">لماذا يحتاج نشاطك إلى حساب بنكي مستقل</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>4 reasons your business needs its own bank account:</p><p>1. Accurate records with considerably less effort<br>2. Easier VAT and corporate tax returns<br>3. A clear view of your real profit<br>4. Faster answers when a bank or investor asks for figures</p><p>It is one of the simplest and most effective bookkeeping controls.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-26" data-tag="CASH FLOW">
+ <div class="meta"><span class="chip">CASH FLOW</span><time dir="ltr" datetime="2026-11-26">26 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">Profit is not cash: a forecast in 3 steps</h3><div class="ar" dir="rtl" lang="ar">توقع التدفق النقدي في 3 خطوات</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Profit and cash are not the same thing. A simple cash-flow forecast in 3 steps:</p><p>1. List the cash you realistically expect to collect each month<br>2. List every payment due: rent, salaries, suppliers, VAT, loan instalments<br>3. Look for the months where the balance goes negative, and act before you get there</p><p>A one-page forecast reviewed monthly prevents most cash surprises.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-27" data-tag="YEAR END">
+ <div class="meta"><span class="chip">YEAR END</span><time dir="ltr" datetime="2026-11-27">27 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">5 things to do before 31 December</h3><div class="ar" dir="rtl" lang="ar">5 أمور قبل 31 ديسمبر</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>Year end is approaching. 5 things to do before 31 December:</p><p>1. Count your stock<br>2. Review aged receivables and assess their recoverability<br>3. Record accruals and prepayments<br>4. Update your fixed asset register<br>5. Confirm whether any VAT or corporate tax threshold has been exceeded</p><p>A well-prepared year-end close considerably simplifies the corporate tax return.</p></div></details>
+</article>
+<article class="post" data-date="2026-11-30" data-tag="HOW WE WORK">
+ <div class="meta"><span class="chip">HOW WE WORK</span><time dir="ltr" datetime="2026-11-30">30 Nov 2026</time></div>
+ <h3 dir="ltr" lang="en">How we start with every client</h3><div class="ar" dir="rtl" lang="ar">كيف نبدأ مع كل عميل</div>
+ <details><summary><span data-l="ar">اقرأ المقال</span><span data-l="en">Read</span></summary><div class="body" lang="en" dir="ltr"><p>How we start with every client:</p><p>1. A free first consultation call<br>2. We review your records and your VAT and corporate tax obligations<br>3. You get a clear monthly package<br>4. Then monthly reports and deadline reminders, so nothing is missed</p><p>We look forward to working with you.</p></div></details>
+</article>
+      </div>
+      <p class="empty" id="posts-empty" hidden><span data-l="ar">أول مقال ينزل يوم 2 نوفمبر 2026.</span><span data-l="en">The first note is published on 2 November 2026.</span></p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow"><span data-l="ar">الأسئلة الشائعة</span><span data-l="en">FAQ</span></div>
+        <h2><span data-l="ar">أسئلة يطرحها عملاؤنا</span><span data-l="en">Questions our clients ask</span></h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary><span data-l="ar">متى يكون التسجيل في ضريبة القيمة المضافة إلزامياً؟</span><span data-l="en">When is VAT registration mandatory?</span></summary>
+          <p><span data-l="ar">يكون التسجيل إلزامياً إذا تجاوزت قيمة التوريدات الخاضعة للضريبة 375,000 درهم خلال الأشهر الاثني عشر السابقة، أو كان من المتوقع تجاوزها خلال الأيام الثلاثين التالية. ويجوز التسجيل الاختياري إذا تجاوزت التوريدات أو النفقات الخاضعة للضريبة 187,500 درهم.</span><span data-l="en">Registration is mandatory where taxable supplies exceeded AED 375,000 over the previous 12 months, or are expected to exceed it within the next 30 days. Voluntary registration is available where taxable supplies or expenses exceed AED 187,500.</span></p>
+        </details>
+        <details>
+          <summary><span data-l="ar">ما نسبة ضريبة الشركات في دولة الإمارات؟</span><span data-l="en">What is the UAE corporate tax rate?</span></summary>
+          <p><span data-l="ar">0% على الدخل الخاضع للضريبة حتى 375,000 درهم، و9% على ما يزيد على ذلك. ويُقدَّم الإقرار وتُسدَّد الضريبة خلال 9 أشهر من نهاية الفترة الضريبية. وتتاح للأعمال التي لا تتجاوز إيراداتها 3 ملايين درهم إمكانية اختيار إعفاء الأعمال الصغيرة عن الفترات الضريبية المنتهية في أو قبل 31 ديسمبر 2029.</span><span data-l="en">0% on taxable income up to AED 375,000 and 9% above that. The return must be filed and the tax paid within 9 months of the end of the tax period. Businesses with revenue of up to AED 3 million may elect Small Business Relief for tax periods ending on or before 31 December 2029.</span></p>
+        </details>
+        <details>
+          <summary><span data-l="ar">ما المستندات المطلوبة لبدء العمل؟</span><span data-l="en">Which documents do you need to begin?</span></summary>
+          <p><span data-l="ar">الرخصة التجارية، وشهادة التسجيل الضريبي إن وُجدت، وكشوف الحسابات البنكية لآخر ثلاثة أشهر، وفواتير المبيعات والمشتريات.</span><span data-l="en">Your trade licence, your tax registration certificate (if any), bank statements for the last three months, and your sales and purchase invoices.</span></p>
+        </details>
+        <details>
+          <summary><span data-l="ar">هل يمكنني الاطلاع على حساباتي في أي وقت؟</span><span data-l="en">Can I access my accounts at any time?</span></summary>
+          <p><span data-l="ar">نعم. تُحفَظ حساباتكم على نظام محاسبي سحابي يتيح لكم الاطلاع عليها في أي وقت.</span><span data-l="en">Yes. Your accounts are maintained on a cloud accounting system that you can access at any time.</span></p>
+        </details>
+      </div>
+      <p class="note"><span data-l="ar">المعلومات الواردة في هذه الصفحة عامة لأغراض التوعية فقط، ولا تُعدّ استشارة مهنية لحالة بعينها.</span><span data-l="en">The information on this page is general in nature and does not constitute professional advice for any specific situation.</span></p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="eyebrow"><span data-l="ar">تواصل معنا</span><span data-l="en">Contact</span></div>
+        <h2><span data-l="ar">ابدأوا باستشارة أولى مجانية</span><span data-l="en">Start with a complimentary consultation</span></h2>
+        <p style="color:var(--ink-2);max-width:32em"><span data-l="ar">أرسلوا إلينا طبيعة نشاطكم والعدد التقريبي لمعاملاتكم الشهرية، وسنوافيكم بعرض سعر مكتوب خلال يوم عمل واحد.</span><span data-l="en">Share the nature of your business and your approximate monthly transaction volume, and we will send you a written quotation within one working day.</span></p>
+        <div><a class="btn btn-primary" href="https://wa.me/971562667020" target="_blank" rel="noopener"><span data-l="ar">تواصلوا معنا عبر واتساب</span><span data-l="en">Contact us on WhatsApp</span></a></div>
+      </div>
+      <div class="cards">
+        <div class="card"><div><div class="k"><span data-l="ar">واتساب / هاتف</span><span data-l="en">WhatsApp / phone</span></div><div class="v" id="c-phone">+971 56 266 7020</div></div><button class="copy" type="button" data-copy="c-phone">Copy</button></div>
+        <div class="card"><div><div class="k"><span data-l="ar">البريد الإلكتروني</span><span data-l="en">Email</span></div><div class="v" id="c-mail">islamabdullah.ae@gmail.com</div></div><button class="copy" type="button" data-copy="c-mail">Copy</button></div>
+        <div class="card"><div><div class="k">Instagram</div><div class="v"><a href="https://www.instagram.com/savant.ad/" target="_blank" rel="noopener">@savant.ad</a></div></div></div>
+        <div class="card"><div><div class="k"><span data-l="ar">المقر</span><span data-l="en">Location</span></div><div class="v" style="font-family:inherit"><span data-l="ar">أبوظبي، الإمارات العربية المتحدة</span><span data-l="en">Abu Dhabi, United Arab Emirates</span></div></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <span>© 2026 SAVANT for Accounting · سفينت للمحاسبة</span>
+    <span class="mono">Abu Dhabi Economic Licence CN-5704766</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('lang');
+  function set(l){
+    root.setAttribute('data-lang',l); root.setAttribute('lang',l); root.setAttribute('dir',l==='ar'?'rtl':'ltr');
+    btn.textContent=l==='ar'?'EN':'عربي';
+    try{localStorage.setItem('savant-lang',l)}catch(e){}
+  }
+  var saved=null; try{saved=localStorage.getItem('savant-lang')}catch(e){}
+  set(saved==='en'?'en':'ar');
+  btn.addEventListener('click',function(){set(root.getAttribute('data-lang')==='ar'?'en':'ar')});
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var el=document.getElementById(b.getAttribute('data-copy')), txt=el.textContent.trim();
+      function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1500)}
+      function fallback(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback)}else{fallback()}
+    });
+  });
+})();
+
+  (function(){
+    var groups={VAT:['UAE VAT','REMINDER','E-INVOICING'],TAX:['CORPORATE TAX','COMPLIANCE','MYTH VS FACT','YEAR END'],BOOKS:['BOOKKEEPING','MONTH END','CASH FLOW','YEAR END','HOW WE WORK','ABOUT US'],FEAS:['FEASIBILITY']};
+    var today=new Date(); var iso=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+    var posts=[].slice.call(document.querySelectorAll('#posts .post')), cur='all';
+    posts.reverse().forEach(function(p){document.getElementById('posts').appendChild(p)});
+    function apply(){var n=0;posts.forEach(function(p){var live=p.dataset.date<=iso, ok=cur==='all'||groups[cur].indexOf(p.dataset.tag)>-1; p.hidden=!(live&&ok); if(!p.hidden)n++}); document.getElementById('posts-empty').hidden=n>0}
+    document.querySelectorAll('.f').forEach(function(b){b.addEventListener('click',function(){cur=b.dataset.f;document.querySelectorAll('.f').forEach(function(x){x.classList.toggle('on',x===b)});apply()})});
+    apply();
+  })();
+</script>
