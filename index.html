@@ -19,6 +19,8 @@
 <meta property="og:locale" content="ar_AE">
 <meta property="og:locale:alternate" content="en_GB">
 <meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0B0C0A">
+<meta name="format-detection" content="telephone=no">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"AccountingService","name":"SAVANT for Accounting","alternateName":"سفينت للمحاسبة","url":"https://vat.ad/","email":"contact@vat.ad","telephone":"+971562667020","address":{"@type":"PostalAddress","addressLocality":"Abu Dhabi","addressCountry":"AE"},"areaServed":"AE","sameAs":["https://www.instagram.com/savant.ad/"]}
 </script>
@@ -66,6 +68,38 @@ nav a:hover{color:var(--ink)}
 .lang{background:none;border:1px solid var(--line);color:var(--ink);font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;border-radius:999px;padding:7px 12px;cursor:pointer;min-height:36px}
 .lang:hover{border-color:var(--olive)}
 @media (max-width:760px){nav{display:none}.lang{margin-inline-start:auto}}
+/* v3: header states, mobile menu, progress, reveal, enquiry */
+header{transition:box-shadow .2s,background .2s}
+header.scrolled{box-shadow:0 8px 24px rgba(0,0,0,.35);background:rgba(11,12,10,.94)}
+.progress{position:absolute;inset-inline-start:0;bottom:-1px;height:2px;width:0;background:var(--olive);transition:width .1s linear}
+nav a{position:relative;padding-block:4px}
+nav a.on{color:var(--ink)}
+nav a.on::after{content:"";position:absolute;inset-inline:0;bottom:-2px;height:2px;border-radius:2px;background:var(--olive)}
+.menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--ink);border-radius:10px;width:40px;height:36px;cursor:pointer;align-items:center;justify-content:center}
+.menu-btn svg{width:18px;height:18px}
+@media (max-width:760px){
+  .menu-btn{display:inline-flex}
+  .lang{margin-inline-start:auto}
+  nav.open{display:flex;position:fixed;top:64px;inset-inline:0;z-index:30;flex-direction:column;gap:0;background:#0B0C0A;box-shadow:0 18px 30px rgba(0,0,0,.5);border-bottom:1px solid var(--line);padding:6px 16px 14px;margin:0}
+  nav.open a{padding:13px 4px;font-size:16px;border-bottom:1px solid rgba(169,185,138,.1)}
+  nav.open a.on::after{display:none}
+}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+.to-top{position:fixed;bottom:20px;inset-inline-start:20px;z-index:998;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(19,21,16,.92);color:var(--ink);cursor:pointer;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.to-top.show{opacity:1;pointer-events:auto}
+.to-top:hover{border-color:var(--olive)}
+.enq{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:12px;margin-top:6px}
+.enq .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+@media (max-width:560px){.enq .row2{grid-template-columns:minmax(0,1fr)}}
+.enq label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--ink-2)}
+.enq input,.enq select,.enq textarea{background:var(--panel-2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 12px;font:inherit;font-size:15px;min-height:44px}
+.enq textarea{min-height:90px;resize:vertical}
+.enq input,.enq select,.enq textarea{width:100%;min-width:0}
+.enq{min-width:0}
+.enq input:focus,.enq select:focus,.enq textarea:focus{outline:none;border-color:var(--olive)}
+.enq .hint{font-size:12px;color:var(--muted)}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;border:1px solid transparent}
@@ -201,7 +235,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <svg viewBox="228 124 477.06 477.06" aria-hidden="true"><path fill="#F2F2EE" fill-rule="evenodd" d="M369.41 601.06H228l.47-477.06h181.44c6.14 102.39-21.29 193.22-61.36 284.21-3.4 10.35 11.76 16.94 16.61 7.03C435.32 272.06 560.05 191.46 705.06 124v259.39C583.4 433.14 364.07 423.16 369.41 601.06Z"/></svg>
       <b>SAVANT</b>
     </a>
-    <nav aria-label="Main">
+    <nav aria-label="Main" id="mainNav">
       <a href="#services"><span data-l="ar">الخدمات</span><span data-l="en">Services</span></a>
       <a href="#packages"><span data-l="ar">الباقات</span><span data-l="en">Packages</span></a>
       <a href="#start"><span data-l="ar">آلية العمل</span><span data-l="en">How we work</span></a>
@@ -210,7 +244,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <a href="#contact"><span data-l="ar">تواصل معنا</span><span data-l="en">Contact</span></a>
     </nav>
     <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mainNav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
 </header>
 
 <main id="top">
@@ -713,7 +749,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="eyebrow"><span data-l="ar">تواصل معنا</span><span data-l="en">Contact</span></div>
         <h2><span data-l="ar">ابدأوا باستشارة أولى مجانية</span><span data-l="en">Start with a complimentary consultation</span></h2>
         <p style="color:var(--ink-2);max-width:32em"><span data-l="ar">أرسلوا إلينا طبيعة نشاطكم والعدد التقريبي لمعاملاتكم الشهرية، وسنوافيكم بعرض سعر مكتوب خلال يوم عمل واحد.</span><span data-l="en">Share the nature of your business and your approximate monthly transaction volume, and we will send you a written quotation within one working day.</span></p>
-        <div><a class="btn btn-primary" href="https://wa.me/971562667020" target="_blank" rel="noopener noreferrer"><span data-l="ar">تواصلوا معنا عبر واتساب</span><span data-l="en">Contact us on WhatsApp</span></a></div>
+        <div class="enq" id="enq">
+          <div class="row2">
+            <label><span data-l="ar">الاسم</span><span data-l="en">Name</span><input id="eq-name" autocomplete="name" maxlength="80"></label>
+            <label><span data-l="ar">اسم الشركة</span><span data-l="en">Company</span><input id="eq-co" autocomplete="organization" maxlength="120"></label>
+          </div>
+          <label><span data-l="ar">الخدمة المطلوبة</span><span data-l="en">Service needed</span>
+            <select id="eq-svc">
+              <option value="VAT">ضريبة القيمة المضافة — VAT</option>
+              <option value="Corporate Tax">ضريبة الشركات — Corporate Tax</option>
+              <option value="Bookkeeping">مسك الدفاتر — Bookkeeping</option>
+              <option value="IFRS Financial Statements">قوائم مالية IFRS — Financial statements</option>
+              <option value="Feasibility Study">دراسة جدوى — Feasibility study</option>
+              <option value="Company Setup / Licence">تأسيس شركة / رخصة — Company setup</option>
+              <option value="ICV / ISO / Supplier Registration">ICV / ISO / تسجيل مورد — Supplier registration</option>
+              <option value="Other">أخرى — Other</option>
+            </select></label>
+          <label><span data-l="ar">تفاصيل مختصرة (النشاط، عدد المعاملات الشهرية)</span><span data-l="en">Short details (activity, monthly transactions)</span><textarea id="eq-msg" maxlength="600"></textarea></label>
+          <div><button class="btn btn-primary" type="button" id="eq-send"><span data-l="ar">إرسال عبر واتساب</span><span data-l="en">Send via WhatsApp</span></button></div>
+          <div class="hint"><span data-l="ar">يُفتح واتساب برسالة جاهزة ولا تُحفظ أي بيانات على الموقع.</span><span data-l="en">WhatsApp opens with a ready message; nothing is stored on this site.</span></div>
+        </div>
       </div>
       <div class="cards">
         <div class="card"><div><div class="k"><span data-l="ar">واتساب / هاتف</span><span data-l="en">WhatsApp / phone</span></div><div class="v" id="c-phone">+971 56 266 7020</div></div><button class="copy" type="button" data-copy="c-phone">Copy</button></div>
@@ -724,6 +779,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     </div>
   </section>
 </main>
+<button class="to-top" id="toTop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 <footer>
   <div class="wrap">
     <span>© 2026 SAVANT for Accounting · سفينت للمحاسبة</span>
@@ -742,6 +798,34 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   var saved=null; try{saved=localStorage.getItem('savant-lang')}catch(e){}
   set(saved==='en'?'en':'ar');
   btn.addEventListener('click',function(){set(root.getAttribute('data-lang')==='ar'?'en':'ar')});
+  // mobile menu
+  var nav=document.getElementById('mainNav'), mb=document.getElementById('menuBtn');
+  function closeMenu(){nav.classList.remove('open');mb.setAttribute('aria-expanded','false')}
+  mb.addEventListener('click',function(){var o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o?'true':'false')});
+  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+  // header shadow, progress, back-to-top
+  var hdr=document.querySelector('header'), pg=document.getElementById('progress'), tt=document.getElementById('toTop'), tick=false;
+  function onScroll(){tick=false;var y=window.scrollY||0,h=document.documentElement.scrollHeight-innerHeight;hdr.classList.toggle('scrolled',y>8);pg.style.width=(h>0?Math.min(100,y/h*100):0)+'%';tt.classList.toggle('show',y>900)}
+  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true}); onScroll();
+  tt.addEventListener('click',function(){scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})});
+  // active section + reveal
+  if('IntersectionObserver' in window){
+    var links={}; nav.querySelectorAll('a[href^="#"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&links[e.target.id]){Object.keys(links).forEach(function(k){links[k].classList.toggle('on',k===e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+    document.querySelectorAll('main section[id]').forEach(function(sec){io.observe(sec)});
+    var rv=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('main section > .wrap').forEach(function(el,i){if(i>0){el.classList.add('rv');rv.observe(el)}});
+  }
+  // WhatsApp enquiry
+  var send=document.getElementById('eq-send');
+  if(send) send.addEventListener('click',function(){
+    function v(id){return (document.getElementById(id).value||'').trim()}
+    var ar=root.getAttribute('data-lang')==='ar';
+    var lines=ar?['مرحباً سفينت للمحاسبة،','الاسم: '+(v('eq-name')||'—'),'الشركة: '+(v('eq-co')||'—'),'الخدمة: '+v('eq-svc'),v('eq-msg')?'التفاصيل: '+v('eq-msg'):'','أرغب في استشارة أولى مجانية.']
+                :['Hello SAVANT for Accounting,','Name: '+(v('eq-name')||'—'),'Company: '+(v('eq-co')||'—'),'Service: '+v('eq-svc'),v('eq-msg')?'Details: '+v('eq-msg'):'','I would like a complimentary first consultation.'];
+    window.open('https://wa.me/971562667020?text='+encodeURIComponent(lines.filter(Boolean).join('\n')),'_blank','noopener');
+  });
   document.querySelectorAll('[data-copy]').forEach(function(b){
     b.addEventListener('click',function(){
       var el=document.getElementById(b.getAttribute('data-copy')), txt=el.textContent.trim();
